@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: social_media_db
+      POSTGRES_USER: azegha
+      POSTGRES_PASSWORD: Azegha2002#
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://azegha:Azegha2002#@db:5432/social_media_db
+    depends_on:
+      - db
+  frontend:
+    build: ./frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+volumes:
+  postgres_data:
